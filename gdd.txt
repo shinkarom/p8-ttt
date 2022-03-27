@@ -1,0 +1,25 @@
+Tic-Tac-Toe
+
+On the 3x3 grid players take turns putting their symbols. Whoever puts
+three in a row, line or diagonal wins.
+
+Screens
+
+1. Main Menu
+
+ * Title
+ * Button "Play" -> 2
+
+2. Game Screen
+
+ * Grid
+ * Prompt "Press Z to go to main menu or X to start new game" -> 1
+
+Sprints
+
+ * Show main menu
+ * Show game screen
+ * Display grid
+ * Make move
+ * AI move
+ * Winner detection
