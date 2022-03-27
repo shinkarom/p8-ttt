@@ -41,17 +41,52 @@ end
 function game_update()
 end
 
+function draw_grid()
+ for i=1,3 do
+  for j=1,3 do
+   local x0=40+20*(i-1)
+   local y0=40+20*(j-1)
+   local c=cell(i,j)
+   if c==red_player then
+    col=red_color
+   elseif c==blue_player then
+    col=blue_color
+   else
+    col=empty_color
+   end
+   rectfill(x0,y0,x0+10,y0+10,col)
+  end
+ end
+end
+
+function draw_player()
+ if player_to_move==red_player then
+  col=red_color
+  s="red"
+ elseif player_to_move==blue_player then
+  col=blue_color
+  s="blue"
+ else 
+  col=empty_color
+ end
+ print("you are playing "..s,30,20,col)
+end
+
 function game_draw()
  cls()
- print("<grid here>", 40,40)
+ draw_grid()
+ draw_player()
 end
 -->8
 --game logic
 empty=0
 red_player=1
 blue_player=2
+empty_color=6
+red_color=8
+blue_color=12
 
-player_to_move=0
+player_to_move=red_player
 grid={ empty,empty,empty,
  empty,empty,empty,
  empty,empty,empty }
