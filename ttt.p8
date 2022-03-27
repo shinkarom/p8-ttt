@@ -27,6 +27,13 @@ function menu_update()
 end
 
 function menu_draw()
+ cls()
+ print("red",30,30, 8)
+ print("vs",40,40,6)
+ print("blue",50,50,12)
+ print("tic-tac-toe",25,60,6)
+ 
+ print("press z to start game", 10, 100,6)
 end
 __gfx__
 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
