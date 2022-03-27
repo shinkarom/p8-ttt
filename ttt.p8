@@ -18,6 +18,7 @@ function menu_init()
 end
 
 function menu_update()
+ if btnp(4) then game_init() end
 end
 
 function menu_draw()
@@ -41,6 +42,8 @@ function game_update()
 end
 
 function game_draw()
+ cls()
+ print("<grid here>", 40,40)
 end
 __gfx__
 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
