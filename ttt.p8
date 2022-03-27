@@ -5,12 +5,28 @@ __lua__
 --shinkarom
 
 function _init()
+ menu_init()
 end
 
 function _update()
+ update()
 end
 
 function _draw()
+ draw()
+end
+-->8
+--main menu
+
+function menu_init()
+ update=menu_update
+ draw=menu_draw
+end
+
+function menu_update()
+end
+
+function menu_draw()
 end
 __gfx__
 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
