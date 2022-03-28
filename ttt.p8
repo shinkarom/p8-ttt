@@ -44,6 +44,15 @@ cursor_color = 3
 cursor_width = 2
 
 function game_update()
+ if btnp(⬆️) then
+  cursor_y = (cursor_y-1)%3
+ elseif btnp(⬇️) then
+  cursor_y = (cursor_y+1)%3
+ elseif btnp(⬅️) then
+  cursor_x = (cursor_x-1)%3
+ elseif btnp(➡️) then
+  cursor_x = (cursor_x+1)%3
+ end
 end
 
 function draw_grid()
@@ -78,20 +87,24 @@ function draw_player()
 end
 
 function draw_cursor()
- local tlx = 40+20*(cursor_x-1)
- local tly = 40+20*(cursor_y-1)
+ local tlx = 40+20*cursor_x
+ local tly = 40+20*cursor_y
  local trx = tlx+10
  local try = tly
  local blx = tlx
  local bly = tly+10
  local brx = blx+10
  local bry = bly
+ --top
  rectfill(tlx-cursor_width, tly-cursor_width,
   trx+cursor_width, try, cursor_color) 
+ --left
  rectfill(tlx-cursor_width ,tly,
   blx, bly+cursor_width, cursor_color)
+ --bottom
  rectfill(blx, bly, brx+cursor_width, 
   bry+cursor_width, cursor_color)
+ --right
  rectfill(trx, try, 
   brx+cursor_width, bry, cursor_color)
 end
