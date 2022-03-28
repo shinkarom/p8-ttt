@@ -38,6 +38,11 @@ function game_init()
  draw=game_draw
 end
 
+cursor_x = 1
+cursor_y = 1
+cursor_color = 3
+cursor_width = 2
+
 function game_update()
 end
 
@@ -72,9 +77,29 @@ function draw_player()
  print("you are playing "..s,30,20,col)
 end
 
+function draw_cursor()
+ local tlx = 40+20*(cursor_x-1)
+ local tly = 40+20*(cursor_y-1)
+ local trx = tlx+10
+ local try = tly
+ local blx = tlx
+ local bly = tly+10
+ local brx = blx+10
+ local bry = bly
+ rectfill(tlx-cursor_width, tly-cursor_width,
+  trx+cursor_width, try, cursor_color) 
+ rectfill(tlx-cursor_width ,tly,
+  blx, bly+cursor_width, cursor_color)
+ rectfill(blx, bly, brx+cursor_width, 
+  bry+cursor_width, cursor_color)
+ rectfill(trx, try, 
+  brx+cursor_width, bry, cursor_color)
+end
+
 function game_draw()
  cls()
  draw_grid()
+ draw_cursor()
  draw_player()
 end
 -->8
