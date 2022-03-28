@@ -78,10 +78,10 @@ function draw_grid()
 end
 
 function draw_player()
- if player_to_move==red_player then
+ if human_player==red_player then
   col=red_color
   s="red"
- elseif player_to_move==blue_player then
+ elseif human_player==blue_player then
   col=blue_color
   s="blue"
  else 
@@ -128,6 +128,8 @@ empty_color=6
 red_color=8
 blue_color=12
 
+human_player=red_player
+ai_player=blue_player
 player_to_move=red_player
 grid={ empty,empty,empty,
  empty,empty,empty,
@@ -139,8 +141,29 @@ end
 
 function make_move(coord)
  grid[coord] = player_to_move
+ next_player()
+ if player_to_move == ai_player then
+  make_move(select_ai_move())
+ end
+end
+
+function next_player()
  player_to_move = (player_to_move==red_player) and
   blue_player or red_player
+end
+
+function get_empties()
+ local ops = {}
+ for i=1,9 do
+  if grid[i]==empty then
+   add(ops,i)
+  end
+ end
+ return ops
+end
+
+function select_ai_move()
+ return rnd(get_empties())
 end
 __gfx__
 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000

@@ -23,3 +23,4 @@ Sprints
  * Make move
  * AI move
  * Winner detection
+ * Sounds
