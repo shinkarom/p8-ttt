@@ -52,15 +52,19 @@ function game_update()
   cursor_x = (cursor_x-1)%3
  elseif btnp(➡️) then
   cursor_x = (cursor_x+1)%3
+ elseif btnp(🅾️) then
+  if grid[xy(cursor_x, cursor_y)]==empty then
+   make_move(xy(cursor_x, cursor_y))
+  end 
  end
 end
 
 function draw_grid()
- for i=1,3 do
-  for j=1,3 do
-   local x0=40+20*(i-1)
-   local y0=40+20*(j-1)
-   local c=cell(i,j)
+ for i=0,2 do
+  for j=0,2 do
+   local x0=40+20*i
+   local y0=40+20*j
+   local c=grid[xy(i,j)]
    if c==red_player then
     col=red_color
    elseif c==blue_player then
@@ -129,8 +133,14 @@ grid={ empty,empty,empty,
  empty,empty,empty,
  empty,empty,empty }
  
-function cell(x,y)
- return grid[3*(y-1)+x]
+function xy(x,y)
+ return 3*y+x+1
+end
+
+function make_move(coord)
+ grid[coord] = player_to_move
+ player_to_move = (player_to_move==red_player) and
+  blue_player or red_player
 end
 __gfx__
 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
