@@ -36,6 +36,7 @@ end
 function game_init()
  update=game_update
  draw=game_draw
+ init_game()
 end
 
 cursor_x = 1
@@ -44,18 +45,20 @@ cursor_color = 3
 cursor_width = 2
 
 function game_update()
- if btnp(⬆️) then
-  cursor_y = (cursor_y-1)%3
- elseif btnp(⬇️) then
-  cursor_y = (cursor_y+1)%3
- elseif btnp(⬅️) then
-  cursor_x = (cursor_x-1)%3
- elseif btnp(➡️) then
-  cursor_x = (cursor_x+1)%3
- elseif btnp(🅾️) then
-  if grid[xy(cursor_x, cursor_y)]==empty then
-   make_move(xy(cursor_x, cursor_y))
-  end 
+ if winner==empty then
+  if btnp(⬆️) then
+   cursor_y = (cursor_y-1)%3
+  elseif btnp(⬇️) then
+   cursor_y = (cursor_y+1)%3
+  elseif btnp(⬅️) then
+   cursor_x = (cursor_x-1)%3
+  elseif btnp(➡️) then
+   cursor_x = (cursor_x+1)%3
+  elseif btnp(🅾️) then
+   if grid[xy(cursor_x, cursor_y)]==empty then
+    make_move(xy(cursor_x, cursor_y))
+   end 
+  end
  end
 end
 
@@ -124,16 +127,20 @@ end
 empty=0
 red_player=1
 blue_player=2
+draw=3
 empty_color=6
 red_color=8
 blue_color=12
 
-human_player=red_player
-ai_player=blue_player
-player_to_move=red_player
-grid={ empty,empty,empty,
- empty,empty,empty,
- empty,empty,empty }
+function init_game()
+ human_player=red_player
+ ai_player=blue_player
+ player_to_move=red_player
+ winner=empty
+ grid={ empty,empty,empty,
+  empty,empty,empty,
+  empty,empty,empty }
+end
  
 function xy(x,y)
  return 3*y+x+1
@@ -141,10 +148,17 @@ end
 
 function make_move(coord)
  grid[coord] = player_to_move
- next_player()
- if player_to_move == ai_player then
-  make_move(select_ai_move())
+ check_winner()
+ if winner!=empty then
+  next_player()
+  if player_to_move == ai_player then
+   make_move(select_ai_move())
+  end
  end
+end
+
+function check_winner()
+ winner=empty
 end
 
 function next_player()
