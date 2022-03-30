@@ -59,6 +59,12 @@ function game_update()
     make_move(xy(cursor_x, cursor_y))
    end 
   end
+ else
+  if btnp(❎) then
+   menu_init()
+  elseif btnp(🅾️) then
+   game_init()
+  end
  end
 end
 
@@ -107,6 +113,12 @@ function draw_winner()
  end
 end
 
+function draw_newgameprompt()
+ print("press x to go to",20,100,5)
+ print("the main menu",20,110,5)
+ print("or z to start a new game",20,120,5)
+end
+
 function draw_cursor()
  local tlx = 40+20*cursor_x
  local tly = 40+20*cursor_y
@@ -138,6 +150,7 @@ function game_draw()
   draw_player()
  else
   draw_winner()
+  draw_newgameprompt()
  end
  
 end
