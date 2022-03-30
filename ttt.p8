@@ -55,11 +55,15 @@ function game_update()
   elseif btnp(➡️) then
    cursor_x = (cursor_x+1)%3
   elseif btnp(🅾️) then
-   if grid[xy(cursor_x, cursor_y)]==empty then
+   if can_move() then
     make_move(xy(cursor_x, cursor_y))
    end 
   end
  end
+end
+
+function can_move()
+ return grid[xy(cursor_x, cursor_y)]==empty
 end
 
 function draw_grid()
@@ -119,7 +123,9 @@ end
 function game_draw()
  cls()
  draw_grid()
- draw_cursor()
+ if winner==empty then
+  draw_cursor()
+ end
  draw_player()
 end
 -->8
@@ -148,8 +154,8 @@ end
 
 function make_move(coord)
  grid[coord] = player_to_move
- check_winner()
- if winner!=empty then
+ winner=check_winner()
+ if winner==empty then
   next_player()
   if player_to_move == ai_player then
    make_move(select_ai_move())
@@ -158,7 +164,25 @@ function make_move(coord)
 end
 
 function check_winner()
- winner=empty
+ local empties=get_empties()
+ if #empties==0 then return draw end
+ local threes={{1,2,3},{4,5,6},
+  {7,8,9},{1,4,7},{2,5,8},{3,6,9},
+  {1,5,9},{3,5,7}}
+ for i=1,#threes do
+  local t=threes[i]
+  local w=check_three(t[1],t[2],t[3])
+  if w!=empty then return w end
+ end
+ return empty
+end
+
+function check_three(x,y,z)
+ if grid[x]!=empty and grid[x]==grid[y] and grid[x]==grid[z] then
+  return grid[x]
+ else
+  return empty
+ end
 end
 
 function next_player()
