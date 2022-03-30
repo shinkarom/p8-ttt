@@ -97,6 +97,16 @@ function draw_player()
  print("you are playing "..s,30,20,col)
 end
 
+function draw_winner()
+ if winner==draw then
+  print("draw",30,20,5)
+ elseif winner==red_player then
+  print("red wins!",30,20,red_color)
+ elseif winner==blue_player then
+  print("blue wins!",30,20,blue_color)
+ end
+end
+
 function draw_cursor()
  local tlx = 40+20*cursor_x
  local tly = 40+20*cursor_y
@@ -125,8 +135,11 @@ function game_draw()
  draw_grid()
  if winner==empty then
   draw_cursor()
+  draw_player()
+ else
+  draw_winner()
  end
- draw_player()
+ 
 end
 -->8
 --game logic
