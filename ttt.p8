@@ -40,10 +40,10 @@ function game_init()
  endmusic_played=false
  sfx(2)
  init_game()
+ cursor_x = 1
+ cursor_y = 1
 end
 
-cursor_x = 1
-cursor_y = 1
 cursor_color = 3
 cursor_width = 2
 
@@ -179,13 +179,25 @@ red_color=8
 blue_color=12
 
 function init_game()
- human_player=red_player
- ai_player=blue_player
- player_to_move=red_player
  winner=empty
  grid={ empty,empty,empty,
   empty,empty,empty,
   empty,empty,empty }
+ if rnd(2) < 1 then
+  human_player=red_player
+  ai_player=blue_player
+ else
+  human_player=blue_player
+  ai_player=red_player
+ end
+ if rnd(2) < 1 then
+  player_to_move=human_player
+ else
+  player_to_move=ai_player
+ end
+ if player_to_move==ai_player then
+  make_move(select_ai_move())
+ end
 end
  
 function xy(x,y)
