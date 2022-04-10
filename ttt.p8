@@ -178,6 +178,10 @@ empty_color=6
 red_color=8
 blue_color=12
 
+triples={{1,2,3},{4,5,6},
+  {7,8,9},{1,4,7},{2,5,8},{3,6,9},
+  {1,5,9},{3,5,7}}
+
 function init_game()
  winner=empty
  grid={ empty,empty,empty,
@@ -216,12 +220,9 @@ function make_move(coord)
 end
 
 function check_winner()
- local threes={{1,2,3},{4,5,6},
-  {7,8,9},{1,4,7},{2,5,8},{3,6,9},
-  {1,5,9},{3,5,7}}
- for i=1,#threes do
-  local t=threes[i]
-  local w=check_three(t[1],t[2],t[3])
+ for i=1,#triples do
+  local t=triples[i]
+  local w=check_triple(t[1],t[2],t[3])
   if w!=empty then return w end
  end
  local empties=get_empties()
@@ -229,7 +230,7 @@ function check_winner()
  return empty
 end
 
-function check_three(x,y,z)
+function check_triple(x,y,z)
  if grid[x]!=empty and grid[x]==grid[y] and grid[x]==grid[z] then
   return grid[x]
  else
@@ -252,8 +253,33 @@ function get_empties()
  return ops
 end
 
+function get_hole()
+ for i=1,#triples do
+  local tr=triples[i]
+  local hm=0
+  local em=nil
+  for j=1,#tr do
+   local cl=tr[j]
+   if grid[cl]==empty then
+    em=cl
+   elseif grid[cl]==human_player then
+    hm=hm+1
+   end
+  end
+  if (hm==2) and (em!=nil) then
+   return em
+  end
+ end
+ return nil
+end
+
 function select_ai_move()
- return rnd(get_empties())
+	local hole=get_hole()
+	if hole!=nil then
+	 return hole
+	else
+  return rnd(get_empties())
+ end
 end
 __gfx__
 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
